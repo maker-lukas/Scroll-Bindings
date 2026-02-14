@@ -1,4 +1,4 @@
-package com.orangopontotango.scrollwheelkeybinds
+package com.orangopontotango.scrollbindings
 
 import net.fabricmc.api.ClientModInitializer
 import net.minecraft.client.util.InputUtil
@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory
 import net.minecraft.client.option.KeyBinding
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 
-object ScrollWheelKeybindsClient : ClientModInitializer {
+object ScrollBindingsClient : ClientModInitializer {
     const val SCROLL_UP_CODE = 100
     const val SCROLL_DOWN_CODE = 101
 

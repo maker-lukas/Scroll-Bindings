@@ -1,7 +1,7 @@
-package com.orangopontotango.scrollwheelkeybinds.mixin.client;
+package com.orangopontotango.scrollbindings.mixin.client;
 
-import com.orangopontotango.scrollwheelkeybinds.ScrollWheelKeybindsClient;
-import com.orangopontotango.scrollwheelkeybinds.ScrollWheelMode;
+import com.orangopontotango.scrollbindings.ScrollBindingsClient;
+import com.orangopontotango.scrollbindings.ScrollWheelMode;
 import net.minecraft.client.gui.screen.option.GameOptionsScreen;
 import net.minecraft.client.gui.screen.option.MouseOptionsScreen;
 import net.minecraft.client.gui.screen.Screen;
@@ -24,20 +24,20 @@ public abstract class MouseOptionsScreenMixin extends GameOptionsScreen {
     @Inject(method = "addOptions", at = @At("TAIL"))
     private void addScrollWheelOption(CallbackInfo ci) {
         CyclingButtonWidget<ScrollWheelMode> button = CyclingButtonWidget
-            .builder(MouseOptionsScreenMixin::getModeName, ScrollWheelKeybindsClient.INSTANCE.getScrollWheelMode())
+            .builder(MouseOptionsScreenMixin::getModeName, ScrollBindingsClient.INSTANCE.getScrollWheelMode())
             .values(ScrollWheelMode.values())
             .build(
-                Text.translatable("scroll_wheel_keybinds.option.mode"),
-                (widget, mode) -> ScrollWheelKeybindsClient.INSTANCE.setScrollWheelMode(mode)
+                Text.translatable("scroll_bindings.option.mode"),
+                (widget, mode) -> ScrollBindingsClient.INSTANCE.setScrollWheelMode(mode)
             );
         this.body.addWidgetEntry(button, null);
     }
 
     private static Text getModeName(ScrollWheelMode mode) {
         return switch (mode) {
-            case NORMAL -> Text.translatable("scroll_wheel_keybinds.mode.normal");
-            case KEYBINDS -> Text.translatable("scroll_wheel_keybinds.mode.keybinds");
-            case DISABLED -> Text.translatable("scroll_wheel_keybinds.mode.disabled");
+            case NORMAL -> Text.translatable("scroll_bindings.mode.normal");
+            case KEYBINDS -> Text.translatable("scroll_bindings.mode.keybinds");
+            case DISABLED -> Text.translatable("scroll_bindings.mode.disabled");
         };
     }
 

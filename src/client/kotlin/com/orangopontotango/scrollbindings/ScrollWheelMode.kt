@@ -1,4 +1,4 @@
-package com.orangopontotango.scrollwheelkeybinds
+package com.orangopontotango.scrollbindings
 
 enum class ScrollWheelMode {
     NORMAL,

@@ -1,4 +1,4 @@
-package com.orangopontotango.scrollwheelkeybinds.mixin.client;
+package com.orangopontotango.scrollbindings.mixin.client;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.KeybindsScreen;
@@ -9,11 +9,11 @@ import org.spongepowered.asm.mixin.Shadow;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.gui.screen.option.ControlsListWidget;
 
-import com.orangopontotango.scrollwheelkeybinds.ScrollWheelKeybindsClient;
+import com.orangopontotango.scrollbindings.ScrollBindingsClient;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.util.Util;
 
-import com.orangopontotango.scrollwheelkeybinds.ScrollWheelMode;
+import com.orangopontotango.scrollbindings.ScrollWheelMode;
 
 @Mixin(KeybindsScreen.class)
 public abstract class KeybindsScreenMixin extends Screen {
@@ -34,14 +34,14 @@ public abstract class KeybindsScreenMixin extends Screen {
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
         if (this.selectedKeyBinding != null
-            && ScrollWheelKeybindsClient.INSTANCE.getScrollWheelMode() == ScrollWheelMode.KEYBINDS) {
+            && ScrollBindingsClient.INSTANCE.getScrollWheelMode() == ScrollWheelMode.KEYBINDS) {
             if (verticalAmount > 0) {
                 this.selectedKeyBinding.setBoundKey(
-                    InputUtil.Type.MOUSE.createFromCode(ScrollWheelKeybindsClient.SCROLL_UP_CODE)
+                    InputUtil.Type.MOUSE.createFromCode(ScrollBindingsClient.SCROLL_UP_CODE)
                 );
             } else if (verticalAmount < 0) {
                 this.selectedKeyBinding.setBoundKey(
-                    InputUtil.Type.MOUSE.createFromCode(ScrollWheelKeybindsClient.SCROLL_DOWN_CODE)
+                    InputUtil.Type.MOUSE.createFromCode(ScrollBindingsClient.SCROLL_DOWN_CODE)
                 );
             } else {
                 return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);

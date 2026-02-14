@@ -1,4 +1,4 @@
-package com.orangopontotango.scrollwheelkeybinds
+package com.orangopontotango.scrollbindings
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -8,7 +8,7 @@ import java.io.File
 object ScrollWheelConfig {
     private val gson: Gson = GsonBuilder().setPrettyPrinting().create()
     private val configFile: File = FabricLoader.getInstance()
-        .configDir.resolve("scroll_wheel_keybinds.json").toFile()
+        .configDir.resolve("scroll_bindings.json").toFile()
 
     data class ConfigData(
         var scrollWheelMode: String = "KEYBINDS"

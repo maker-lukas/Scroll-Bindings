@@ -1,0 +1,10 @@
+{
+    "key.mouse.101": "Scroll Up",
+    "key.mouse.102": "Scroll Down",
+
+    "scroll_bindings.option.mode": "Scroll Wheel Mode",
+    "scroll_bindings.mode.normal": "Normal",
+    "scroll_bindings.mode.keybinds": "Keybinds",
+    "scroll_bindings.mode.disabled": "Disabled"
+
+}

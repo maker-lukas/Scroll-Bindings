@@ -23,7 +23,7 @@ loom {
 	splitEnvironmentSourceSets()
 
 	mods {
-		"scroll_wheel_keybinds" {
+		"scroll_bindings" {
 			sourceSet sourceSets.main
 			sourceSet sourceSets.client
 		}
