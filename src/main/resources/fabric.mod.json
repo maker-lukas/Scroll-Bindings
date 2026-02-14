@@ -1,0 +1,34 @@
+{
+	"schemaVersion": 1,
+	"id": "scroll_wheel_keybinds",
+	"version": "${version}",
+	"name": "Scroll Wheel Keybinds",
+	"description": "Adds scroll wheel keybinds to Minecraft.",
+	"authors": [
+		"orangopontotango"
+	],
+	"license": "AGPL-3.0",
+	"icon": "assets/scroll_wheel_keybinds/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			{
+				"value": "com.orangopontotango.scrollwheelkeybinds.ScrollWheelKeybindsClient",
+				"adapter": "kotlin"
+			}
+		]
+	},
+	"mixins": [
+		{
+			"config": "scroll_wheel_keybinds.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.18.4",
+		"minecraft": "~1.21.11",
+		"java": ">=21",
+		"fabric-api": "*",
+		"fabric-language-kotlin": "*"
+	}
+}

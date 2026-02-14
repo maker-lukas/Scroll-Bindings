@@ -1,0 +1,13 @@
+{
+	"required": true,
+	"package": "com.orangopontotango.scrollwheelkeybinds.mixin.client",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"KeybindsScreenMixin",
+		"MouseScrollMixin",
+		"MouseOptionsScreenMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
