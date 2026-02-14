@@ -1,6 +1,6 @@
 # Scroll Wheel Keybinds
 
-A client-side Fabric mod that allows you to bind the scroll wheel to any keybind in Minecraft. Scroll up and scroll down are treated as assignable keys in the vanilla Controls menu — just scroll while a keybind is waiting for input.
+A client-side Fabric mod that allows you to bind the scroll wheel to any keybind in Minecraft. Scroll up and scroll down are treated as assignable keys in the vanilla Controls menu - just scroll while a keybind is waiting for input.
 
 ## Features
 
