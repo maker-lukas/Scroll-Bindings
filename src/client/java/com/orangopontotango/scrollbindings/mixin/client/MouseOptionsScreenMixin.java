@@ -24,8 +24,9 @@ public abstract class MouseOptionsScreenMixin extends GameOptionsScreen {
     @Inject(method = "addOptions", at = @At("TAIL"))
     private void addScrollWheelOption(CallbackInfo ci) {
         CyclingButtonWidget<ScrollWheelMode> button = CyclingButtonWidget
-            .builder(MouseOptionsScreenMixin::getModeName, ScrollBindingsClient.INSTANCE.getScrollWheelMode())
+            .<ScrollWheelMode>builder(MouseOptionsScreenMixin::getModeName)
             .values(ScrollWheelMode.values())
+            .initially(ScrollBindingsClient.INSTANCE.getScrollWheelMode())
             .build(
                 Text.translatable("scroll_bindings.option.mode"),
                 (widget, mode) -> ScrollBindingsClient.INSTANCE.setScrollWheelMode(mode)
