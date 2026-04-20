@@ -16,4 +16,4 @@ Added support for:
 - [Zoomify](https://modrinth.com/mod/zoomify) 
 
 ### Preview
-https://www.youtube-nocookie.com/embed/wQushtdslv8
+https://www.youtube.com/wQushtdslv8
