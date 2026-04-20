@@ -1,21 +1,22 @@
 package com.orangopontotango.scrollbindings
 
 import net.fabricmc.api.ClientModInitializer
-import net.minecraft.client.util.InputUtil
-import org.slf4j.LoggerFactory
-import net.minecraft.client.option.KeyBinding
+import com.mojang.blaze3d.platform.InputConstants
+import net.minecraft.client.KeyMapping
+import net.minecraft.client.gui.components.debug.DebugScreenEntries
+import net.minecraft.resources.Identifier
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 
 object ScrollBindingsClient : ClientModInitializer {
     const val SCROLL_UP_CODE = 100
     const val SCROLL_DOWN_CODE = 101
 
-    val SCROLL_UP_KEY: InputUtil.Key by lazy {
-        InputUtil.Type.MOUSE.createFromCode(SCROLL_UP_CODE)
+    val SCROLL_UP_KEY: InputConstants.Key by lazy {
+        InputConstants.Type.MOUSE.getOrCreate(SCROLL_UP_CODE)
     }
 
-    val SCROLL_DOWN_KEY: InputUtil.Key by lazy {
-        InputUtil.Type.MOUSE.createFromCode(SCROLL_DOWN_CODE)
+    val SCROLL_DOWN_KEY: InputConstants.Key by lazy {
+        InputConstants.Type.MOUSE.getOrCreate(SCROLL_DOWN_CODE)
     }
 
     private var scrollUpPressed = false
@@ -29,13 +30,15 @@ object ScrollBindingsClient : ClientModInitializer {
 
     fun onScrollInGame(vertical: Double): Boolean {
         if (vertical > 0) {
-            KeyBinding.setKeyPressed(SCROLL_UP_KEY, true)
-            KeyBinding.onKeyPressed(SCROLL_UP_KEY)
+            KeyMapping.set(SCROLL_UP_KEY, true)
+            KeyMapping.click(SCROLL_UP_KEY)
+            DebugEntryCps.recordScrollUp()
             scrollUpPressed = true
             return true
         } else if (vertical < 0) {
-            KeyBinding.setKeyPressed(SCROLL_DOWN_KEY, true)
-            KeyBinding.onKeyPressed(SCROLL_DOWN_KEY)
+            KeyMapping.set(SCROLL_DOWN_KEY, true)
+            KeyMapping.click(SCROLL_DOWN_KEY)
+            DebugEntryCps.recordScrollDown()
             scrollDownPressed = true
             return true
         }
@@ -43,21 +46,26 @@ object ScrollBindingsClient : ClientModInitializer {
     }
 
     fun isScrollKeyBound(): Boolean {
-        val client = net.minecraft.client.MinecraftClient.getInstance() ?: return false
-        return client.options.allKeys.any { it.boundKeyTranslationKey == SCROLL_UP_KEY.translationKey }
-                || client.options.allKeys.any { it.boundKeyTranslationKey == SCROLL_DOWN_KEY.translationKey }
+        val client = net.minecraft.client.Minecraft.getInstance() ?: return false
+        return client.options.keyMappings.any { it.saveString() == SCROLL_UP_KEY.name }
+                || client.options.keyMappings.any { it.saveString() == SCROLL_DOWN_KEY.name }
     }
 
     override fun onInitializeClient() {
         scrollWheelMode = ScrollWheelConfig.load()
 
+        DebugScreenEntries.register(
+            Identifier.parse("scroll_bindings:cps"),
+            DebugEntryCps()
+        )
+
         ClientTickEvents.END_CLIENT_TICK.register { client ->
             if (scrollUpPressed) {
-                KeyBinding.setKeyPressed(SCROLL_UP_KEY, false)
+                KeyMapping.set(SCROLL_UP_KEY, false)
                 scrollUpPressed = false
             }
             if (scrollDownPressed) {
-                KeyBinding.setKeyPressed(SCROLL_DOWN_KEY, false)
+                KeyMapping.set(SCROLL_DOWN_KEY, false)
                 scrollDownPressed = false
             }
         }

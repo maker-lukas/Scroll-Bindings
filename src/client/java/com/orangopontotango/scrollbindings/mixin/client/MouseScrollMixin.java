@@ -1,7 +1,7 @@
 package com.orangopontotango.scrollbindings.mixin.client;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.Mouse;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.MouseHandler;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -13,23 +13,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.orangopontotango.scrollbindings.ScrollWheelMode;
 
-@Mixin(Mouse.class)
+@Mixin(MouseHandler.class)
 public class MouseScrollMixin {
     @Shadow
     @Final
-    private MinecraftClient client;
+    private Minecraft minecraft;
 
-    @Inject(method = "onMouseScroll", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "onScroll", at = @At("HEAD"), cancellable = true)
     private void onScroll(long window, double horizontal, double vertical, CallbackInfo ci) {
-        if (window != this.client.getWindow().getHandle()) {
-            return;
-        }
-        if (this.client.currentScreen != null || this.client.getOverlay() != null) {
-            return;
-        }
-        if (this.client.player == null) {
-            return;
-        }
+        if (window != this.minecraft.getWindow().handle()) return;
+        if (this.minecraft.screen != null || this.minecraft.getOverlay() != null) return;
+        if (this.minecraft.player == null) return;
+
+        if (isZoomifyZooming()) return;
 
         ScrollWheelMode mode = ScrollBindingsClient.INSTANCE.getScrollWheelMode();
 
@@ -39,6 +35,18 @@ public class MouseScrollMixin {
             if (ScrollBindingsClient.INSTANCE.onScrollInGame(vertical)) {
                 ci.cancel();
             }
+        }
+    }
+
+    private static boolean isZoomifyZooming() {
+        try {
+            Class<?> zoomifyClass = Class.forName("dev.isxander.zoomify.Zoomify");
+            Object instance = zoomifyClass.getField("INSTANCE").get(null);
+            return (boolean) zoomifyClass.getMethod("getZooming").invoke(instance);
+        } catch (ClassNotFoundException e) {
+            return false;
+        } catch (Exception e) {
+            return false;
         }
     }
 }
