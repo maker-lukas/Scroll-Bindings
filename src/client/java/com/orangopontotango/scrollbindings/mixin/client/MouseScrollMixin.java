@@ -22,7 +22,7 @@ public class MouseScrollMixin {
     @Inject(method = "onScroll", at = @At("HEAD"), cancellable = true)
     private void onScroll(long window, double horizontal, double vertical, CallbackInfo ci) {
         if (window != this.minecraft.getWindow().handle()) return;
-        if (this.minecraft.screen != null || this.minecraft.getOverlay() != null) return;
+        if (this.minecraft.gui.screen() != null || this.minecraft.gui.overlay() != null) return;
         if (this.minecraft.player == null) return;
 
         if (isZoomifyZooming()) return;
